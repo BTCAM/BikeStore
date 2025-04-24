@@ -33,6 +33,7 @@
 
                 Console.WriteLine("---Viewing Opitions: ");
                 Console.WriteLine("7. Add New Booking ");
+                Console.WriteLine("8. View all Bookings ");
 
                 string opition = Console.ReadLine();
 
@@ -111,10 +112,28 @@
                 }
                 else if (opition == "7")
                 {
-                    Console.WriteLine("Customer Email: ");
+                    Console.WriteLine("Customer Name: ");
+                    string name = Console.ReadLine();
+                    Console.WriteLine("Bike Id");
+                    string bikeId = Console.ReadLine();
+                    Console.WriteLine("Staff name: ");
+                    string staffname = Console.ReadLine();
+
+                    Console.WriteLine("Viewing Time (yyyy-MM-dd HH:mm):");
+                    string timeInput = Console.ReadLine();
+                    DateTime viewingTime = DateTime.Parse(timeInput);
+
+                    //Method to create booking
+                    store1.BookViewing(name, bikeId, staffname, viewingTime);
                  
                 }
-
+                else if (opition == "8")
+                {
+                    foreach (Viewings viewing in store1.Viewings)
+                    {
+                        Console.WriteLine($"{viewing.Customer.FullName} - {viewing.Bikes.Address} - {viewing.Staff.Name} - {viewing.ViewingTime} | {viewing.Status}");
+                    }
+                }
 
 
             }

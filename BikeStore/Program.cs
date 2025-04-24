@@ -20,9 +20,19 @@
             while (!exitMenu)
             {
                 Console.WriteLine("\n --------------------- Main Menu --------------");
-                Console.WriteLine("Customer Opitions: ");
+                Console.WriteLine("---Customer Opitions: ");
                 Console.WriteLine(" 1. Add Customer");
                 Console.WriteLine(" 2. View All Customers");
+                Console.WriteLine(" 3. Filter Customer By Name");
+
+                Console.WriteLine("---Bikes Opitions: ");
+                Console.WriteLine("4. Add Bike ");
+                Console.WriteLine("5. View All Bikes ");
+                Console.WriteLine("6. Filter Bike By Address ");
+
+
+                Console.WriteLine("---Viewing Opitions: ");
+                Console.WriteLine("7. Add New Booking ");
 
                 string opition = Console.ReadLine();
 
@@ -53,10 +63,59 @@
                         Console.WriteLine(customer.GetDetails());
                     }
                 }
+                else if (opition == "3")
+                {
+                    Console.WriteLine("Enter Customer Name");
+                    string name = Console.ReadLine();
+
+                    foreach (Customers customer in store1.CustomersList)
+                    {
+                        if (customer.FullName == name)
+                        {
+                            Console.WriteLine(customer.GetDetails());
+                        }
+                    }
+                }
+                else if (opition == "4")
+                {
+                    Console.WriteLine("Bike ID: ");
+                    string id = Console.ReadLine();
+                    Console.WriteLine("Bike Type");
+                    string type = Console.ReadLine();
+
+                    Console.WriteLine("Address");
+                    string address = Console.ReadLine();
+
+                    store1.AddBikes(new Bikes(id, type, address));
+                }
+
+                else if (opition == "5")
+                {
+                    foreach (Bikes bike in store1.Bikes)
+                    {
+                        Console.WriteLine(bike.GetDetails());
+                    }
+                }
+                else if (opition == "6")
+                {
+                    Console.WriteLine("Enter Bike Address");
+                    string address = Console.ReadLine();
+
+                    foreach (Bikes bike in store1.Bikes)
+                    {
+                        if (bike.Address == address)
+                        {
+                            Console.WriteLine(bike.GetDetails());
+                        }
+                    }
+                }
+                else if (opition == "7")
+                {
+                    Console.WriteLine("Customer Email: ");
+                 
+                }
 
 
-
-            
 
             }
         }

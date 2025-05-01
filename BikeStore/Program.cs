@@ -34,6 +34,11 @@
                 Console.WriteLine("---Viewing Opitions: ");
                 Console.WriteLine("7. Add New Booking ");
                 Console.WriteLine("8. View all Bookings ");
+                Console.WriteLine("9. Adjust Bookings ");
+                Console.WriteLine("10. Find Booking ");
+
+
+                Console.WriteLine("11. Quit ");
 
                 string opition = Console.ReadLine();
 
@@ -62,6 +67,18 @@
                     foreach (Customers customer in store1.CustomersList)
                     {
                         Console.WriteLine(customer.GetDetails());
+
+                        if (customer.CanBookViewing)
+                        {
+                            Console.WriteLine("Status: Can make Booking");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Status: Blocked from Bookings");
+                        }
+
+
+
                     }
                 }
                 else if (opition == "3")
@@ -125,7 +142,7 @@
 
                     //Method to create booking
                     store1.BookViewing(name, bikeId, staffname, viewingTime);
-                 
+
                 }
                 else if (opition == "8")
                 {
@@ -134,8 +151,82 @@
                         Console.WriteLine($"{viewing.Customer.FullName} - {viewing.Bikes.Address} - {viewing.Staff.Name} - {viewing.ViewingTime} | {viewing.Status}");
                     }
                 }
+                else if (opition == "9")
+                {
+                    Console.WriteLine("Enter Customer ID of the Viewing to Adjust: ");
+                    int customerId;
+                    bool parsed = Int32.TryParse(Console.ReadLine(), out customerId);
+                    if (!parsed)
+                    {
+                        Console.WriteLine("Invalid ID");
+                        continue;
+                    }
 
+                    //Find viewing 
+                    Viewings viewing = null;
+                    foreach (var v in store1.Viewings)
+                    {
+                        if (v.Customer.CustomerId == customerId)
+                        {
+                            viewing = v;
+                            break;
+                        }
+                    }
 
+                    //used to modify viewing
+                    if (viewing != null)
+                    {
+                        Console.WriteLine("Current Status: " + viewing.Status);
+                        Console.WriteLine("Enter new status (Booked, Viewing Attended, Viewing Missed, Cancelled: ");
+                        string newStatus = Console.ReadLine();
+
+                        store1.AdjustViewingStatus(viewing.Customer.CustomerId, newStatus);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Viewing not found");
+                    }
+                }
+                else if (opition == "10")
+                {
+                    Console.WriteLine("Enter Customer ID");
+                    int customerID;
+                    bool validID = Int32.TryParse(Console.ReadLine(), out customerID);
+
+                    if (!validID)
+                    {
+                        Console.WriteLine("Invalid ID");
+                        continue;
+                    }
+
+                    Viewings foundviewing = null;
+                    foreach (var v in store1.Viewings)
+                    {
+                        if (v.Customer.CustomerId == customerID)
+                        {
+                            foundviewing = v;
+                            break;
+                        }
+                    }
+                    if (foundviewing != null)
+                    {
+                        Console.WriteLine($"Viewing for Customer: {foundviewing.Customer.FullName}");
+                        Console.WriteLine($"Property: {foundviewing.Bikes.GetDetails()}");
+                        Console.WriteLine($"Staff: {foundviewing.Staff.Name}");
+                        Console.WriteLine($"Time: {foundviewing.ViewingTime}");
+                        Console.WriteLine($"Status: {foundviewing.Status}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("No viewings found for that customer ID");
+                    }
+
+                }
+                else if (opition == "11")
+                {
+                    exitMenu = true;
+                    Console.WriteLine("Exiting system");
+                }
             }
         }
     }

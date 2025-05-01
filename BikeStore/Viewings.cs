@@ -24,5 +24,10 @@ namespace BikeStore
             ViewingTime = viewingTime;
             Status = "Bookings";
         }
+
+
+  
+
+
     }
 }

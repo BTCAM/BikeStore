@@ -113,7 +113,51 @@ namespace BikeStore
 
         }
 
+        public void AdjustViewingStatus(int viewingId, string newStatus)
+        {
+            Viewings viewing = null;
+            //loop to find booking store in viewing object
+            foreach (var v in Viewings)
+            {
+                if (v.Customer.CustomerId == viewingId)
+                {
+                    viewing = v;
+                    break;
+                }
+            }
 
+            if (viewing != null)
+            {
+                if (newStatus == "Booked" || newStatus == "Viewing Attended" || newStatus == "Viewing Missed" || newStatus == "Cancelled")
+                {
+                    viewing.Status = newStatus;
+
+                    //viewing missed add one to customer
+                    if (newStatus == "Viewing Missed")
+                    {
+                        viewing.Customer.MissedViewing++;
+
+                        if (viewing.Customer.MissedViewing >=3)
+                        {
+                            Console.WriteLine("Customer can no longer make bookings");
+                        }
+                    }
+                    Console.WriteLine("Viewing status updated");
+
+                }
+                else
+                {
+                    Console.WriteLine("Invalid Status given");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Viewing not found");
+            }
+
+
+
+        }
 
     }
 }
